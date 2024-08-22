@@ -14,8 +14,10 @@ HELP_PARAGRAPHS = {
     'main':'an example cli tool',
     'prep': {
         'main':'setup project for analysis',
+        'model-data-pipeline':'download data and prep model input data. Same as -dpm.',
         'download-base-data':'download model input data, raw. ',
         'prep-base-data':'after downloading, apply basic prep steps and archive.',
+        'prep-model-data':'setup prediction data.',
     },
     'level2': {
         'main':'level 2',
@@ -31,12 +33,18 @@ def main():
 
     h = HELP_PARAGRAPHS['prep']
     parser_corpus = subparsers.add_parser('prep', help=h['main'])
+    parser_corpus.add_argument('--model-data-pipeline', '-l', required=False,
+                               action='store_true',
+                               help=h['model-data-pipeline'])
     parser_corpus.add_argument('--download-base-data', '-d', required=False,
                                action='store_true',
                                help=h['download-base-data'])
     parser_corpus.add_argument('--prep-base-data', '-p', required=False,
                                action='store_true',
                                help=h['prep-base-data'])
+    parser_corpus.add_argument('--prep-model-data', '-m', required=False,
+                               action='store_true',
+                               help=h['prep-model-data'])
 
     h = HELP_PARAGRAPHS['level2']
     parser_summ = subparsers.add_parser('level2', help=h['main'])
@@ -49,12 +57,19 @@ def main():
     args = parser.parse_args()
 
     if args.command == 'prep':
+        if args.model_data_pipeline:
+            args.download_base_data = True
+            args.prep_base_data = True
+            args.prep_model_data = True
         if args.download_base_data:
             from zero_ts_demo import retrieve_data as rd
             rd.retrieve_data()
         if args.prep_base_data:
             from zero_ts_demo import prep_data as prd
             prd.prep_write()
+        if args.prep_model_data:
+            from zero_ts_demo import prep_model_data as pmd
+            pmd.prep_write()
 
     elif args.command == 'level2':
         if args.third_thing:
