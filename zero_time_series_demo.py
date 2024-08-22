@@ -12,10 +12,9 @@ import numpy as np
 
 HELP_PARAGRAPHS = {
     'main':'an example cli tool',
-    'level1': {
-        'main':'main level',
-        'first-thing':'docs for first thing',
-        'second-thing':'docs for second thing',
+    'prep': {
+        'main':'setup project for analysis',
+        'download-base-data':'download model input data, raw. ',
     },
     'level2': {
         'main':'level 2',
@@ -25,32 +24,15 @@ HELP_PARAGRAPHS = {
 }
 
 
-def check_path(fp):
-    # Check if the path is absolute or relative
-    if os.path.isabs(args.input_file):
-        file_path = args.input_file
-    else:
-        file_path = os.path.join(os.getcwd(), args.input_file)
-
-    # Verify if the file exists
-    if not os.path.exists(file_path):
-        print(f"Error: File '{file_path}' not found.")
-
-    return file_path
-
-
 def main():
     parser = argparse.ArgumentParser(description=HELP_PARAGRAPHS['main'])
     subparsers = parser.add_subparsers(dest='command', help='')
 
-    h = HELP_PARAGRAPHS['level1']
-    parser_corpus = subparsers.add_parser('level1', help=h['main'])
-    parser_corpus.add_argument('--first-thing', '-f', required=False,
-                               default='', action='store',
-                               help=h['first-thing'])
-    parser_corpus.add_argument('--second-thing', '-s', required=False,
-                               default=False, action='store_true',
-                               help=h['second-thing'])
+    h = HELP_PARAGRAPHS['prep']
+    parser_corpus = subparsers.add_parser('prep', help=h['main'])
+    parser_corpus.add_argument('--download-base-data', '-d', required=False,
+                               action='store_true',
+                               help=h['download-base-data'])
 
     h = HELP_PARAGRAPHS['level2']
     parser_summ = subparsers.add_parser('level2', help=h['main'])
@@ -62,11 +44,10 @@ def main():
                              help=h['fourth-thing'])
     args = parser.parse_args()
 
-    if args.command == 'level1':
-        if args.first_thing:
-            print('here is first thing')
-        elif args.second_thing:
-            print('here is second thing')
+    if args.command == 'prep':
+        if args.download_base_data:
+            from zero_ts_demo import retrieve_data as rd
+            rd.retrieve_data()
 
     elif args.command == 'level2':
         if args.third_thing:
