@@ -44,8 +44,8 @@ def prep_write():
     """Prepare data for prediction task"""
     print('processing data...')
     df = (hp.load_base_data().pipe(subset_data)
-            .reset_index(drop=False).sort_values(by=['date'])
-            .drop(columns=['date']))
+            .reset_index(drop=False).sort_values(by=['date']))
+    df['date'] = pd.to_datetime(df['date'])
     print('done, writing data...')
     fpo = join(hp.PATH_DATA, 'model-data.csv')
     df.to_csv(fpo)
