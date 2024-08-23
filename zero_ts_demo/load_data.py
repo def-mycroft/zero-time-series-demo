@@ -10,8 +10,10 @@ def load_model_data():
         msg = (f"must have path '{fp}', build by running "
                f"'zero-time-series-demo prep --model-data-pipeline")
         raise Exception(msg)
-    df = pd.read_csv(fp)
-    return df
+    df = pd.read_csv(fp).filter(regex='^mt_|date')
+    df['date'] = pd.to_datetime(df['date'])
+    df = df.set_index('date')
+    return df[sorted(df.columns)].sort_index()
 
 
 def load_base_data():
