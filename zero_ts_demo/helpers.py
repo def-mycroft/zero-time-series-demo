@@ -1,6 +1,6 @@
 
-from .load_data import *
 
+from .load_data import *
 import inspect
 import tempfile
 from copy import deepcopy as copy
@@ -16,12 +16,14 @@ DOCS_URL = 'https://archive.ics.uci.edu/dataset/321/electricityloaddiagrams20112
 
 
 def display_source(func):
+    """In jupyter, display source of function"""
     x = inspect.getsource(func)
     x = f"```python\n{x}\n```"
     display(Markdown(x))
 
 
 def create_project_folder():
+    """As needed, create project data folder"""
     if not exists(PATH_DATA):
         x = input(f"Need a folder for data...create '{PATH_DATA}'? (y) > ")
         if x == 'y':
@@ -34,10 +36,27 @@ def create_image_grid(fig_list, cols, rows, resize=1,
                       bg_color=(255, 255, 255)):
     """Concatenate a list of figures into a grid
 
-    Assumes that all figures are exactly the same size. 
+    Parameters
+    ----------
 
-    image_list should be a list of matplotlib.figure.Figure objects. 
+        fig_list : list of matplotlib.figure.Figure
+            List of matplotlib figures to be arranged in a grid.
+        cols : int
+            Number of columns in the grid.
+        rows : int
+            Number of rows in the grid.
+        resize : float, optional
+            Scaling factor for resizing the final grid image (default is
+            1).
+        bg_color : tuple, optional
+            Background color of the grid image as an RGB tuple (default
+            is white: (255, 255, 255)).
 
+    Returns
+    -------
+        PIL.Image.Image
+            A PIL Image object representing the concatenated grid of
+            figures.
     """
     image_list = [fig_to_pil(x) for x in fig_list]
     # get size of 'cell' images, assume that all images are the same size
