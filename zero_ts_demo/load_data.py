@@ -5,6 +5,7 @@ PATH_DATA = join(expanduser('~'), 'zero-ts-demo-data')
 
 
 def load_model_data():
+    """Load pre-prepared model input data"""
     fp = join(PATH_DATA, 'model-data.csv')
     if not exists(fp):
         msg = (f"must have path '{fp}', build by running "
@@ -17,6 +18,7 @@ def load_model_data():
 
 
 def load_base_data():
+    """Load raw data from UCI repo"""
     fp = join(PATH_DATA, 'LD2011_2014.csv.gz')
     if not exists(fp):
         msg = (f"must have path '{fp}', build by running "

@@ -3,10 +3,9 @@ from .imports import *
 
 
 def prep_pipeline(sl, sample=0):
-    """Apply prep steps
+    """Apply some basic prep steps
 
-    If sample is not zero, rows will be sampled for 
-    quicker development.
+    Optionally sample only some rows for development purposes.
 
     """
     if sample:
@@ -14,13 +13,15 @@ def prep_pipeline(sl, sample=0):
     sl['date'] = pd.to_datetime(sl['date'])
     sl.columns = [x.lower() for x in sl.columns]
     for col in [x for x in sl.columns if x != 'date']:
-        sl[col] = sl[col].astype(str).str.replace(',', '.').astype(float)
+        sl[col] = (sl[col].astype(str).str.replace(',', '.')
+                     .astype(float))
     return sl
 
 
 def prep_write():
     """Prep input data and write out to file"""
-    fp = join(os.path.expanduser('~'), 'zero-ts-demo-data', 'LD2011_2014.txt')
+    fp = join(os.path.expanduser('~'), 'zero-ts-demo-data', 
+              'LD2011_2014.txt')
     print(f"loading base data from '{fp}'...")
     base_data = pd.read_csv(fp, sep=';', low_memory=False)
     print('done, manipulating...')
