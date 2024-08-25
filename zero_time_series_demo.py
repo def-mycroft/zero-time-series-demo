@@ -19,8 +19,8 @@ HELP_PARAGRAPHS = {
         'prep-base-data':'after downloading, apply basic prep steps and archive.',
         'prep-model-data':'setup prediction data.',
     },
-    'level2': {
-        'main':'level 2',
+    'placeholder': {
+        'main':'placeholder values for future subcommand. ',
         'third-thing':'docs for third thing',
         'fourth-thing':'docs for fourth thing',
     },
@@ -71,7 +71,7 @@ def main():
             from zero_ts_demo import prep_model_data as pmd
             pmd.prep_write()
 
-    elif args.command == 'level2':
+    elif args.command == 'placeholder':
         if args.third_thing:
             print('3rd')
         elif args.fourth_thing:
