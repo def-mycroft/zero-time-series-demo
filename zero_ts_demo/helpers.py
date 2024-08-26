@@ -38,25 +38,25 @@ def create_image_grid(fig_list, cols, rows, resize=1,
 
     Parameters
     ----------
-
-        fig_list : list of matplotlib.figure.Figure
-            List of matplotlib figures to be arranged in a grid.
-        cols : int
-            Number of columns in the grid.
-        rows : int
-            Number of rows in the grid.
-        resize : float, optional
-            Scaling factor for resizing the final grid image (default is
-            1).
-        bg_color : tuple, optional
-            Background color of the grid image as an RGB tuple (default
-            is white: (255, 255, 255)).
+    fig_list : list of matplotlib.figure.Figure
+        List of matplotlib figures to be arranged in a grid.
+    cols : int
+        Number of columns in the grid.
+    rows : int
+        Number of rows in the grid.
+    resize : float, optional
+        Scaling factor for resizing the final grid image (default is
+        1).
+    bg_color : tuple, optional
+        Background color of the grid image as an RGB tuple (default
+        is white: (255, 255, 255)).
 
     Returns
     -------
-        PIL.Image.Image
-            A PIL Image object representing the concatenated grid of
-            figures.
+    PIL.Image.Image
+        A PIL Image object representing the concatenated grid of
+        figures.
+
     """
     image_list = [fig_to_pil(x) for x in fig_list]
     # get size of 'cell' images, assume that all images are the same size
